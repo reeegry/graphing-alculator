@@ -1,0 +1,1 @@
+CMakeLists.txt not found in E:\offic\Documents\GitHub\graphic_calculator Select CMakeLists.txt
