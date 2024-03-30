@@ -1,4 +1,4 @@
-"E:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=E:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" "-DCMAKE_C_COMPILER=E:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/bin/gcc.exe" "-DCMAKE_CXX_COMPILER=E:/Program Files/JetBrains/CLion 2023.2.2/bin/mingw/bin/g++.exe" -G Ninja -S E:\offic\Documents\GitHub\graphic_calculator\graphic_interface -B E:\offic\Documents\GitHub\graphic_calculator\graphic_interface\cmake-build-debug
+"E:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=E:/Program Files/JetBrains/CLion 2023.2.2/bin/ninja/win/x64/ninja.exe" -G Ninja -S E:\offic\Documents\GitHub\graphic_calculator\graphic_interface -B E:\offic\Documents\GitHub\graphic_calculator\graphic_interface\cmake-build-debug
 CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
   Compatibility with CMake < 3.5 will be removed from a future version of
   CMake.
@@ -7,12 +7,9 @@ CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
   CMake that the project does not need compatibility with older versions.
 
 
-CMake Error at E:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake:230 (message):
-  Could NOT find FLTK (missing: FLTK_LIBRARIES FLTK_INCLUDE_DIR)
-Call Stack (most recent call first):
-  E:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.27/Modules/FindPackageHandleStandardArgs.cmake:600 (_FPHSA_FAILURE_MESSAGE)
-  E:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/share/cmake-3.27/Modules/FindFLTK.cmake:327 (FIND_PACKAGE_HANDLE_STANDARD_ARGS)
-  CMakeLists.txt:8 (find_package)
+CMake Error at CMakeLists.txt:14 (target_link_libraries):
+  Cannot specify link libraries for target "graphic_interface" which is not
+  built by this project.
 
 
 -- Configuring incomplete, errors occurred!
