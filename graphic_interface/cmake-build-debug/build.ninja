@@ -40,44 +40,6 @@ include CMakeFiles\rules.ninja
 # Logical path to working directory; prefix for absolute paths.
 
 cmake_ninja_workdir = E$:\offic\Documents\GitHub\graphic_calculator\graphic_interface\cmake-build-debug\
-# =============================================================================
-# Object build statements for EXECUTABLE target graphic_interface_launch
-
-
-#############################################
-# Order-only phony target for graphic_interface_launch
-
-build cmake_object_order_depends_target_graphic_interface_launch: phony || CMakeFiles\graphic_interface_launch.dir
-
-build CMakeFiles\graphic_interface_launch.dir\launch.cpp.obj: CXX_COMPILER__graphic_interface_launch_unscanned_Debug E$:\offic\Documents\GitHub\graphic_calculator\graphic_interface\launch.cpp || cmake_object_order_depends_target_graphic_interface_launch
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1 -std:c++17
-  INCLUDES = -IE:\FLTK
-  OBJECT_DIR = CMakeFiles\graphic_interface_launch.dir
-  OBJECT_FILE_DIR = CMakeFiles\graphic_interface_launch.dir
-  TARGET_COMPILE_PDB = CMakeFiles\graphic_interface_launch.dir\
-  TARGET_PDB = graphic_interface_launch.pdb
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target graphic_interface_launch
-
-
-#############################################
-# Link the executable graphic_interface_launch.exe
-
-build graphic_interface_launch.exe: CXX_EXECUTABLE_LINKER__graphic_interface_launch_Debug CMakeFiles\graphic_interface_launch.dir\launch.cpp.obj
-  FLAGS = /DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1
-  LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
-  LINK_LIBRARIES = fltk.lib  fltk_images.lib  fltk_forms.lib  fltk_gl.lib  fltk_jpeg.lib  fltk_png.lib  fltk_z.lib  fltk_vg.lib  fltk_fontconfig.lib  fltk_thread.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib
-  LINK_PATH = -LIBPATH:E:\FLTK\lib
-  OBJECT_DIR = CMakeFiles\graphic_interface_launch.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_COMPILE_PDB = CMakeFiles\graphic_interface_launch.dir\
-  TARGET_FILE = graphic_interface_launch.exe
-  TARGET_IMPLIB = graphic_interface_launch.lib
-  TARGET_PDB = graphic_interface_launch.pdb
-
 
 #############################################
 # Utility command for edit_cache
@@ -104,8 +66,6 @@ build rebuild_cache: phony CMakeFiles\rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build graphic_interface_launch: phony graphic_interface_launch.exe
-
 # =============================================================================
 # Folder targets.
 
@@ -114,7 +74,7 @@ build graphic_interface_launch: phony graphic_interface_launch.exe
 #############################################
 # Folder: E:/offic/Documents/GitHub/graphic_calculator/graphic_interface/cmake-build-debug
 
-build all: phony graphic_interface_launch.exe
+build all: phony
 
 # =============================================================================
 # Unknown Build Time Dependencies.

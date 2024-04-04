@@ -12,11 +12,7 @@
 						"string" : "3.0"
 					},
 					"projectIndex" : 0,
-					"source" : ".",
-					"targetIndexes" : 
-					[
-						0
-					]
+					"source" : "."
 				}
 			],
 			"name" : "Debug",
@@ -27,23 +23,10 @@
 					[
 						0
 					],
-					"name" : "graphic_interface",
-					"targetIndexes" : 
-					[
-						0
-					]
+					"name" : "graphic_interface"
 				}
 			],
-			"targets" : 
-			[
-				{
-					"directoryIndex" : 0,
-					"id" : "graphic_interface_launch::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-graphic_interface_launch-Debug-9fe2c7d34c0260d6c982.json",
-					"name" : "graphic_interface_launch",
-					"projectIndex" : 0
-				}
-			]
+			"targets" : []
 		}
 	],
 	"kind" : "codemodel",

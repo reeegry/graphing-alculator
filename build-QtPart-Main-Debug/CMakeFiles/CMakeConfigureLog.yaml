@@ -1,0 +1,80 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      The system is: Windows - 10.0.22000 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:3 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler: E:/offic/Downloads/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe 
+      Build flags: -DQT_QML_DEBUG
+      Id flags:  
+      
+      The output was:
+      0
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.exe"
+      
+      The CXX compiler identification is GNU, found in:
+        E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/3.29.0/CompilerIdCXX/a.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeDetermineCompilerABI.cmake:64 (try_compile)"
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-gn8cpa"
+      binary: "E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-gn8cpa"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-DQT_QML_DEBUG"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-gn8cpa'
+        
+        Run Build Command(s): C:/msys64/mingw64/bin/cmake.exe -E env VERBOSE=1 jom -f Makefile /nologo cmTC_8a6a5\\fast
+        no such file or directory
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/msys64/mingw64/share/cmake/Modules/CMakeTestCXXCompiler.cmake:49 (try_compile)"
+      - "CMakeLists.txt:3 (project)"
+    checks:
+      - "Check for working CXX compiler: E:/offic/Downloads/x86_64-8.1.0-release-posix-seh-rt_v6-rev0/mingw64/bin/g++.exe"
+    directories:
+      source: "E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-9h74bg"
+      binary: "E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-9h74bg"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "-DQT_QML_DEBUG"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "CMAKE_CXX_COMPILER_WORKS"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/offic/Documents/GitHub/graphic_calculator/build-QtPart-Main-Debug/CMakeFiles/CMakeScratch/TryCompile-9h74bg'
+        
+        Run Build Command(s): C:/msys64/mingw64/bin/cmake.exe -E env VERBOSE=1 jom -f Makefile /nologo cmTC_7d827\\fast
+        no such file or directory
+        
+      exitCode: 1
+...
