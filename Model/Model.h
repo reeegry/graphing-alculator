@@ -8,3 +8,5 @@ class Model {
 
 
 #endif //GRAPHIC_INTERFACE_MODEL_H
+
+// Описание

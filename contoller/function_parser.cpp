@@ -215,6 +215,7 @@ private:
     }
 };
 
+FunctionParser::FunctionParser(const int function_str) {}
 
 //int main() {
 //    FunctionParser fp = FunctionParser("sin(90)+4-cos(0)");

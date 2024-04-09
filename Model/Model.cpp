@@ -1,11 +1,13 @@
 #include "Model.h"
+
 #include <map>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 
-class Point {
+namespace {
+    class Point {
     private:
         double x;
         double y;
@@ -14,29 +16,30 @@ class Point {
         Point(double xCoord, double yCoord) : x(xCoord), y(yCoord) {}
 
         double getX() const { return x; }
+
         double getY() const { return y; }
 
         // Расстояние между 2 точками
-        double distanceTo(const Point& other) const {
+        double distanceTo(const Point &other) const {
             double dx = x - other.x;
             double dy = y - other.y;
             return std::sqrt(dx * dx + dy * dy);
         }
-};
+    };
 
-class Function {
+    class Function {
     private:
         std::string originalFunction;
         std::map<int, std::string> functionDecomposition;
         // o(log_n). Эффективное хранение элементов
 
     public:
-        Function(const std::string& originalFunc) : originalFunction(originalFunc) {
+        Function(const std::string &originalFunc) : originalFunction(originalFunc) {
             std::transform(originalFunction.begin(), originalFunction.end(), originalFunction.begin(), ::tolower);
         } // Для исправления на нижний регистр
 
         // Разложение функции
-        void addDecomposition(int index, const std::string& decomposition) {
+        void addDecomposition(int index, const std::string &decomposition) {
             functionDecomposition[index] = decomposition;
         }
 
@@ -70,3 +73,6 @@ class Function {
             return (hasSingleVariable()) ? "y = " + originalFunction : originalFunction;
         }
     };
+}
+
+// Реализация
