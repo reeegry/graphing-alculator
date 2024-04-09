@@ -216,8 +216,8 @@ private:
 };
 
 
-int main() {
-    FunctionParser fp = FunctionParser("sin(90)+4-cos(0)");
-    fp.set_var("X", 2.0);
-    std::cout << fp.parse() << std::endl;
+//int main() {
+//    FunctionParser fp = FunctionParser("sin(90)+4-cos(0)");
+//    fp.set_var("X", 2.0);
+//    std::cout << fp.parse() << std::endl;
 }

@@ -32,12 +32,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "E:/offic/Documents/GitHub/graphic_calculator/graphic_interface/cmake-build-debug",
-		"source" : "E:/offic/Documents/GitHub/graphic_calculator/graphic_interface"
+		"build" : "C:/Users/user/OneDrive/Documents/GitHub/graphing-alculator/graphic_interface/cmake-build-debug",
+		"source" : "C:/Users/user/OneDrive/Documents/GitHub/graphing-alculator/graphic_interface"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 6
+		"minor" : 5
 	}
 }
