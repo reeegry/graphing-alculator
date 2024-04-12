@@ -1,2 +1,0 @@
-C:/Users/user/OneDrive/Documents/GitHub/graphing-alculator/graphic_interface/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/user/OneDrive/Documents/GitHub/graphing-alculator/graphic_interface/cmake-build-debug/CMakeFiles/rebuild_cache.dir
