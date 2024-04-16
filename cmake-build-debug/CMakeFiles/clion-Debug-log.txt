@@ -1,0 +1,26 @@
+/snap/clion/274/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" -S /home/pand/CLionProjects/graphing-alculator -B /home/pand/CLionProjects/graphing-alculator/cmake-build-debug
+CMake Deprecation Warning:
+  Support for "Extra Generators" like
+
+    CodeBlocks
+
+  is deprecated and will be removed from a future version of CMake.  IDEs may
+  use the cmake-file-api(7) to view CMake-generated project build trees.
+
+
+CMake Error at /usr/lib/x86_64-linux-gnu/cmake/Qt5/Qt5Config.cmake:28 (find_package):
+  Could not find a package configuration file provided by "Qt5LinguistTools"
+  with any of the following names:
+
+    Qt5LinguistToolsConfig.cmake
+    qt5linguisttools-config.cmake
+
+  Add the installation prefix of "Qt5LinguistTools" to CMAKE_PREFIX_PATH or
+  set "Qt5LinguistTools_DIR" to a directory containing one of the above
+  files.  If "Qt5LinguistTools" provides a separate development package or
+  SDK, be sure it has been installed.
+Call Stack (most recent call first):
+  CMakeLists.txt:13 (find_package)
+
+
+-- Configuring incomplete, errors occurred!
