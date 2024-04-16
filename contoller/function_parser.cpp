@@ -5,7 +5,6 @@
 
 #include "funciton_parser.h"
 
-namespace {
 class Result {
 	public:
     	Result(double v, std::string r) : _current_val(v), _rest_str(r) {}
@@ -20,46 +19,30 @@ class Result {
     	double _current_val;
     	std::string _rest_str;
 	};
+
+
+FunctionParser::FunctionParser(const std::string function_str) : _function_text(function_str), _vars() {}
+
+double FunctionParser::parse() {
+    Result result = additive_parse(_function_text);
+    if (result.get_rest_str().length()) {
+        std::cout << "can't fully parse" << std::endl;
+    }
+    return result.get_curr_val();
 }
 
+void FunctionParser::set_var(std::string var_name, double val) {
+    _vars[var_name] = val;
+}
 
-class FunctionParser {
-	public:
-    	FunctionParser(std::string function_str) : _function_text(std::move(function_str)), vars() {}
-
-    	double parse() {
-        	Result result = additive_parse(_function_text);
-        	if (result.get_rest_str().length()) {
-            	std::cout << "can't fully parse" << std::endl;
-        	}
-        	return result.get_curr_val();
-    	}
-
-    	void set_var(std::string var_name, double val) {
-        	vars[var_name] = val;
-    	}
-
-    	double get_var(std::string var_name) {
-        	auto it = vars.find(var_name);
-        	if (it != vars.end()) {
-            	return it->second;
-        	}
-        	std::cout << "Error: variable name does not exist\n";
-        	return 0.0;
-    	}
-
-	private:
-    	std::string _function_text;
-    	std::map<std::string, double> vars;
-
-    	Result func_var(std::string s);
-    	Result multiplicative_parse(std::string s);
-    	Result bracket(std::string s);
-    	Result additive_parse(std::string s);
-    	Result num(std::string s);
-    Result calculate_val(std::string func, Result r);
-	};
-
+double FunctionParser::get_var(std::string var_name) {
+    auto it = _vars.find(var_name);
+    if (it != _vars.end()) {
+        return it->second;
+    }
+    std::cout << "Error: variable name does not exist\n";
+    return 0.0;
+}
 
 Result FunctionParser::func_var(std::string s) {
     std::string f = "";
@@ -112,12 +95,16 @@ Result FunctionParser::bracket(std::string s) {
         Result r = additive_parse(s.substr(1));
         if (r.get_rest_str().length() && r.get_rest_str()[0] == ')') {
             r.set_rest_str(r.get_rest_str().substr(1));
+            if (r.get_rest_str().length() > 0) {
+                return additive_parse(r.get_rest_str());
+            } else {
+                return r;
+            }
         } else {
             std::cout << "no close bracket\n";
         }
-        return r;
     }
-    return func_var(s);
+    return Result(0.0, "");
 }
 
 Result FunctionParser::additive_parse(std::string s) {
@@ -177,14 +164,13 @@ Result FunctionParser::num(std::string s) {
 
 Result FunctionParser::calculate_val(std::string func, Result r) {
     if (func == "sin") {
-        return Result(sin(r.get_curr_val() * M_PI / 180), r.get_rest_str());
+        return Result(sin(r.get_curr_val()), r.get_rest_str());
     } else if (func == "cos") {
-        return Result(cos(r.get_curr_val() * M_PI / 180), r.get_rest_str());
+        return Result(cos(r.get_curr_val()), r.get_rest_str());
     } else if (func == "tan") {
-        return Result(tan(r.get_curr_val() * M_PI / 180), r.get_rest_str());
+        return Result(tan(r.get_curr_val()), r.get_rest_str());
     } else {
         std::cout << "unknown function\n";
         return Result(0, r.get_rest_str());
-        throw std::invalid_argument("Unknown function: " + func);
     }
 }
