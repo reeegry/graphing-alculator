@@ -3,6 +3,8 @@
 #include <math.h>
 #include <string>
 
+#include "funciton_parser.h"
+
 class Result {
     public:
         Result(double v, std::string r)
@@ -37,25 +39,24 @@ class Result {
 };
 
 
+FunctionParser::FunctionParser(std::string function_str) :
+    _function_text(std::move(function_str))
+{
+};
+
+double FunctionParser::parse()
+{
+    Result result = additive_parse(_FINC_STR);
+    if (result.get_rest_str().length()) {
+        std::cout << "can't full parse" << std::endl;
+    }
+
+    return result.get_curr_val();
+}
 
 // additive [+, -] && multiplicative [*, /] && primitive trig functions implementation 
 class FunctionParser {
     public:
-        FunctionParser(const std::string function_str) {
-            _FINC_STR = function_str;
-            std::map<std::string, double> vars {};
-        };
-
-        double parse()
-        {
-            Result result = additive_parse(_FINC_STR);
-            if (result.get_rest_str().length()) {
-                std::cout << "can't full parse" << std::endl;
-            }
-
-            return result.get_curr_val();
-        }
-
         void set_var(std::string var_name, double val)
         {
             vars[var_name] = val;

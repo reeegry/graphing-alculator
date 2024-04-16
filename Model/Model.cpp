@@ -7,24 +7,25 @@
 #include <vector>
 
 namespace {
-    class Point {
-        public:
-            Point(double xCoord, double yCoord) : x(xCoord), y(yCoord) {}
+class Point {
+    public:
+        Point(double xCoord, double yCoord) : x(xCoord), y(yCoord) {}
 
-            double getX() const { return x; }
+        double getX() const { return x; }
 
-            double getY() const { return y; }
+        double getY() const { return y; }
 
-            // Расстояние между 2 точками
-            double distanceTo(const Point &other) const {
-                double dx = x - other.x;
-                double dy = y - other.y;
-                return std::sqrt(dx * dx + dy * dy);
-            }
-        private:
-            double x;
-            double y;
-    };
+        // Расстояние между 2 точками
+        double distanceTo(const Point &other) const {
+            double dx = x - other.x;
+            double dy = y - other.y;
+            return std::sqrt(dx * dx + dy * dy);
+        }
+    private:
+        double x;
+        double y;
+};
+}
 
     class Function {
         public:
@@ -72,4 +73,3 @@ namespace {
             // o(log_n). Эффективное хранение элементов
 
     };
-}

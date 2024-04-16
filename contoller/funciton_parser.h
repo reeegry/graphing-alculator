@@ -30,8 +30,9 @@ class FunctionParser {
         double get_var(std::string var_name);
 
     private:
-        std::string _FINC_STR; // Строка с математическим выражением для парсинга
-        std::map<std::string, double> vars; // Массив для хранения переменных
+        std::string _function_text; // Строка с математическим выражением для парсинга
+        std::map<std::string, double> _vars; // Массив для хранения переменных
+
         Result func_var(std::string s);
         Result multiplicative_parse(std::string s);
         Result bracket(std::string s);
