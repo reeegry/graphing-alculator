@@ -5,21 +5,6 @@
 #include <map>
 #include <string>
 
-class Result {
-    public:
-        Result(double v, std::string r);
-
-        // Методы доступа к данным класса Result
-        double get_curr_val();
-        void set_curr_val(double new_val);
-        std::string get_rest_str();
-        void set_rest_str(std::string s);
-
-    private:
-        double _current_val;
-        std::string _rest_str;
-};
-
 class FunctionParser {
     public:
         FunctionParser(const std::string function_str);
