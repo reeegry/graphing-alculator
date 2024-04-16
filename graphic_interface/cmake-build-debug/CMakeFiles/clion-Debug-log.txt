@@ -1,1 +1,0 @@
-CMakeLists.txt not found in /home/pand/CLionProjects/graphing-alculator/graphic_interface Select CMakeLists.txt
