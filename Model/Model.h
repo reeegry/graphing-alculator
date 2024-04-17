@@ -25,6 +25,6 @@ public:
     std::string getDefaultFunction() const;
 
 private:
-    std::string originalFunction; // исходная функция
+    std::string _originalFunction; // исходная функция
     std::map<int, std::string> functionDecomposition; // разложение функции
 };

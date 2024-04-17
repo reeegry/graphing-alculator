@@ -1,32 +1,35 @@
+#include <cmath>
 #include <iostream>
 #include <map>
-#include <math.h>
 #include <string>
 
 #include "funciton_parser.h"
 
-class Result {
-	public:
-    	Result(double v, std::string r) : _current_val(v), _rest_str(r) {}
+class FunctionParser::Result {
+public:
+    Result(double currentValue, const std::string& restString) :
+    _current_val(currentValue), _rest_str(restString) {}
 
-    	double get_curr_val() { return _current_val; }
-	    void set_curr_val(double new_val) { _current_val = new_val; }
+    double getCurrentValue() const { return _current_val; }
+    void setCurrentValue(double newValue) { _current_val = newValue; }
 
-	    std::string get_rest_str() { return _rest_str; }
-	    void set_rest_str(std::string s) { _rest_str = s; }
+    std::string getRestString() const { return _rest_str; }
+    void setRestString(const std::string& newString) { _rest_str = newString; }
 
-	private:
-    	double _current_val;
-    	std::string _rest_str;
-	};
+private:
+    double _current_val;
+    std::string _rest_str;
+};
 
 
-FunctionParser::FunctionParser(const std::string function_str) : _function_text(function_str), _vars() {}
+FunctionParser::FunctionParser(const std::string function_str) :
+    _function_text(function_str),
+    _vars() {}
 
 double FunctionParser::parse() {
     Result result = additive_parse(_function_text);
-    if (result.get_rest_str().length()) {
-        std::cout << "can't fully parse" << std::endl;
+    if (!result.get_rest_str().empty()) {
+        std::cout << "Error: Unable to fully parse" << std::endl;
     }
     return result.get_curr_val();
 }
@@ -40,7 +43,7 @@ double FunctionParser::get_var(std::string var_name) {
     if (it != _vars.end()) {
         return it->second;
     }
-    std::cout << "Error: variable name does not exist\n";
+    std::cout << "Error: Variable '" << var_name << "' does not exist" << std::endl;
     return 0.0;
 }
 
@@ -101,7 +104,7 @@ Result FunctionParser::bracket(std::string s) {
                 return r;
             }
         } else {
-            std::cout << "no close bracket\n";
+            std::cout << "Error: No closing bracket" << std::endl;
         }
     }
     return Result(0.0, "");
@@ -163,6 +166,8 @@ Result FunctionParser::num(std::string s) {
 }
 
 Result FunctionParser::calculate_val(std::string func, Result r) {
+    std::transform(func.begin(), func.end(), func.begin(), ::tolower);
+
     if (func == "sin") {
         return Result(sin(r.get_curr_val()), r.get_rest_str());
     } else if (func == "cos") {
@@ -170,7 +175,7 @@ Result FunctionParser::calculate_val(std::string func, Result r) {
     } else if (func == "tan") {
         return Result(tan(r.get_curr_val()), r.get_rest_str());
     } else {
-        std::cout << "unknown function\n";
+        std::cout << "Unknown function: " << func << std::endl;
         return Result(0, r.get_rest_str());
     }
 }

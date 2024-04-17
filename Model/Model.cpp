@@ -26,40 +26,39 @@ class Point {
 };
 }
 
-    class Function {
-        public:
-            Function(const std::string &originalFunc) : originalFunction(originalFunc) {
-                std::transform(originalFunction.begin(), originalFunction.end(), originalFunction.begin(), ::tolower);
+Function::Function(const std::string &originalFunc) :
+    originalFunction(originalFunc) {
+    std::transform(originalFunction.begin(),
+    originalFunction.end(),
+    originalFunction.begin(),
+    ::tolower);
+}
 
-            void addDecomposition(int index, const std::string &decomposition) {
-                functionDecomposition[index] = decomposition;
-            }
+void addDecomposition(int index, const std::string &decomposition) {
+    functionDecomposition[index] = decomposition;
+}
 
-            std::string getOriginalFunction() const {
-                return originalFunction;
-            }
+std::string getOriginalFunction() const {
+    return originalFunction;
+}
 
-            std::string getDecomposition(int index) const {
-                auto it = functionDecomposition.find(index);
-                if (it != functionDecomposition.end()) {
-                    return it->second;
-                } else {
-                    return "Invalid index";
-                }
-            }
+std::string getDecomposition(int index) const {
+    auto it = functionDecomposition.find(index);
+    if (it != functionDecomposition.end()) {
+        return it->second;
+    } else {
+        return "Invalid index";
+    }
+}
 
-            int getDecompositionCount() const {
-                return functionDecomposition.size();
-            }
+int getDecompositionCount() const {
+    return functionDecomposition.size();
+}
 
-            bool hasSingleVariable() const {
-                return originalFunction.find("x") != std::string::npos;
-            }
+bool hasSingleVariable() const {
+    return originalFunction.find("x") != std::string::npos;
+}
 
-            std::string getDefaultFunction() const {
-                return (hasSingleVariable()) ? "y = " + originalFunction : originalFunction;
-            }
-        private:
-            std::string originalFunction;
-            std::map<int, std::string> functionDecomposition;
-    };
+std::string getDefaultFunction() const {
+    return (hasSingleVariable()) ? "y = " + originalFunction : originalFunction;
+}
