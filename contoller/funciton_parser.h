@@ -11,9 +11,11 @@ class FunctionParser {
         double parse();
         void set_var(std::string var_name, double val);
         double get_var(std::string var_name);
-
+        double get_step();
+        void set_step(double new_step);
+        std::string _function_text;
     private:
-        std::string _function_text; // Строка с математическим выражением для парсинга
+        //std::string _function_text; // Строка с математическим выражением для парсинга
         std::map<std::string, double> _vars; // Массив для хранения переменных
 
         class Result;
@@ -23,4 +25,6 @@ class FunctionParser {
         Result additive_parse(std::string s);
         Result num(std::string s);
         Result calculate_val(std::string func, Result r);
+
+        double _step = 1;
 };

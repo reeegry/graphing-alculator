@@ -27,16 +27,18 @@ FunctionParser::FunctionParser(const std::string function_str) :
     _function_text(function_str),
     _vars() {}
 
-double FunctionParser::parse() {
-    Result result = additive_parse(_function_text);
-    if (!result.getRestString().empty()) {
-        std::cout << "Error: Unable to fully parse" << std::endl;
-    }
-    return result.getCurrentValue();
-}
-
 void FunctionParser::set_var(std::string var_name, double val) {
     _vars[var_name] = val;
+}
+
+double FunctionParser::get_step()
+{
+    return _step;
+}
+
+void FunctionParser::set_step(double new_step)
+{
+    _step = new_step;
 }
 
 double FunctionParser::get_var(std::string var_name) {
@@ -93,22 +95,21 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
     }
 }
 
-FunctionParser::Result FunctionParser::bracket(std::string s) {
+FunctionParser::Result FunctionParser::bracket(std::string s)
+{
     char first_chr = s[0];
     if (first_chr == '(') {
         Result r = additive_parse(s.substr(1));
         if (r.getRestString().length() && r.getRestString()[0] == ')') {
             r.setRestString(r.getRestString().substr(1));
-            if (r.getRestString().length() > 0) {
-                return additive_parse(r.getRestString());
+            // if (r.getRestString().length() > 0) {
+            //     return additive_parse(r.getRestString());
             } else {
-                return r;
+                std::cout << "Error: No closing bracket" << std::endl;
             }
-        } else {
-            std::cout << "Error: No closing bracket" << std::endl;
-        }
+        return r;
     }
-    return Result(0.0, "");
+    return func_var(s);
 }
 
 FunctionParser::Result FunctionParser::additive_parse(std::string s) {
@@ -154,7 +155,7 @@ FunctionParser::Result FunctionParser::num(std::string s) {
         std::cout << "not valid num" << std::endl;
     }
 
-    std::string::size_type sz;
+    //std::string::size_type sz;
     double dpart = std::stod(s.substr(0, i));
 
     if (neg) {
@@ -170,13 +171,22 @@ FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r)
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
 
     if (func == "sin") {
-        return Result(sin(r.getCurrentValue()), r.getRestString());
+        return Result(sin(r.getCurrentValue() * M_PI / 180), r.getRestString());
     } else if (func == "cos") {
-        return Result(cos(r.getCurrentValue()), r.getRestString());
+        return Result(cos(r.getCurrentValue() * M_PI / 180), r.getRestString());
     } else if (func == "tan") {
-        return Result(tan(r.getCurrentValue()), r.getRestString());
+        return Result(tan(r.getCurrentValue() * M_PI / 180), r.getRestString());
     } else {
         std::cout << "Unknown function: " << func << std::endl;
-        return Result(0, r.getRestString());
+        //return Result(0, r.getRestString());
     }
 }
+
+double FunctionParser::parse() {
+    Result result = additive_parse(_function_text);
+    if (!result.getRestString().empty()) {
+        std::cout << "Error: Unable to fully parse" << std::endl;
+    }
+    return result.getCurrentValue();
+}
+
