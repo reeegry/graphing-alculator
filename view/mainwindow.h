@@ -20,7 +20,5 @@ public:
 private:
     Ui::MainWindow *ui;
 
-    //void wheelEvent(QWheelEvent *event);
-
 };
 #endif // MAINWINDOW_H

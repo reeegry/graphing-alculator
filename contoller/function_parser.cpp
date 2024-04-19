@@ -2,6 +2,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <algorithm>
 
 #include "funciton_parser.h"
 
@@ -28,10 +29,10 @@ FunctionParser::FunctionParser(const std::string function_str) :
 
 double FunctionParser::parse() {
     Result result = additive_parse(_function_text);
-    if (!result.get_rest_str().empty()) {
+    if (!result.getRestString().empty()) {
         std::cout << "Error: Unable to fully parse" << std::endl;
     }
-    return result.get_curr_val();
+    return result.getCurrentValue();
 }
 
 void FunctionParser::set_var(std::string var_name, double val) {
@@ -47,7 +48,7 @@ double FunctionParser::get_var(std::string var_name) {
     return 0.0;
 }
 
-Result FunctionParser::func_var(std::string s) {
+FunctionParser::Result FunctionParser::func_var(std::string s) {
     std::string f = "";
     int i = 0;
     while (i < s.length() && (isalpha(s[i]) || (isdigit(s[i]) && i > 0))) {
@@ -59,47 +60,47 @@ Result FunctionParser::func_var(std::string s) {
             Result r = bracket(s.substr(f.length()));
             return calculate_val(f, r);
         } else {
-            return Result(vars[f], s.substr(f.length()));
+            return Result(_vars[f], s.substr(f.length()));
         }
     }
     return num(s);
 }
 
-Result FunctionParser::multiplicative_parse(std::string s) {
+FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
     Result tmp_res = bracket(s);
 
-    double current_val = tmp_res.get_curr_val();
+    double current_val = tmp_res.getCurrentValue();
     while (true) {
-        if (!tmp_res.get_rest_str().length()) {
+        if (!tmp_res.getRestString().length()) {
             return tmp_res;
         }
 
-        char sign = tmp_res.get_rest_str()[0];
+        char sign = tmp_res.getRestString()[0];
         if ((sign != '*' && sign != '/')) {
             return tmp_res;
         }
 
-        std::string next = tmp_res.get_rest_str().substr(1);
+        std::string next = tmp_res.getRestString().substr(1);
         Result right = bracket(next);
 
         if (sign == '*') {
-            current_val *= right.get_curr_val();
+            current_val *= right.getCurrentValue();
         } else {
-            current_val /= right.get_curr_val();
+            current_val /= right.getCurrentValue();
         }
 
-        tmp_res = Result(current_val, right.get_rest_str());
+        tmp_res = Result(current_val, right.getRestString());
     }
 }
 
-Result FunctionParser::bracket(std::string s) {
+FunctionParser::Result FunctionParser::bracket(std::string s) {
     char first_chr = s[0];
     if (first_chr == '(') {
         Result r = additive_parse(s.substr(1));
-        if (r.get_rest_str().length() && r.get_rest_str()[0] == ')') {
-            r.set_rest_str(r.get_rest_str().substr(1));
-            if (r.get_rest_str().length() > 0) {
-                return additive_parse(r.get_rest_str());
+        if (r.getRestString().length() && r.getRestString()[0] == ')') {
+            r.setRestString(r.getRestString().substr(1));
+            if (r.getRestString().length() > 0) {
+                return additive_parse(r.getRestString());
             } else {
                 return r;
             }
@@ -110,29 +111,29 @@ Result FunctionParser::bracket(std::string s) {
     return Result(0.0, "");
 }
 
-Result FunctionParser::additive_parse(std::string s) {
+FunctionParser::Result FunctionParser::additive_parse(std::string s) {
     Result tmp_res = multiplicative_parse(s);
-    double current_val = tmp_res.get_curr_val();
-    std::string rest_str = tmp_res.get_rest_str();
+    double current_val = tmp_res.getCurrentValue();
+    std::string rest_str = tmp_res.getRestString();
 
-    while (tmp_res.get_rest_str().length()) {
-        if (!(tmp_res.get_rest_str()[0] == '+' || tmp_res.get_rest_str()[0] == '-')) {
+    while (tmp_res.getRestString().length()) {
+        if (!(tmp_res.getRestString()[0] == '+' || tmp_res.getRestString()[0] == '-')) {
             break;
         }
 
-        char sign = tmp_res.get_rest_str()[0];
-        std::string next = tmp_res.get_rest_str().substr(1);
+        char sign = tmp_res.getRestString()[0];
+        std::string next = tmp_res.getRestString().substr(1);
 
         tmp_res = multiplicative_parse(next);
 
-        current_val = (sign == '+') ? current_val + tmp_res.get_curr_val() : current_val - tmp_res.get_curr_val();
+        current_val = (sign == '+') ? current_val + tmp_res.getCurrentValue() : current_val - tmp_res.getCurrentValue();
     }
 
-    Result new_res = Result(current_val, tmp_res.get_rest_str());
+    Result new_res = Result(current_val, tmp_res.getRestString());
     return new_res;
 }
 
-Result FunctionParser::num(std::string s) {
+FunctionParser::Result FunctionParser::num(std::string s) {
     int i = 0;
     int dot_cnt = 0;
     bool neg = false;
@@ -165,17 +166,17 @@ Result FunctionParser::num(std::string s) {
     return Result(dpart, rest_part);
 }
 
-Result FunctionParser::calculate_val(std::string func, Result r) {
+FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r) {
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
 
     if (func == "sin") {
-        return Result(sin(r.get_curr_val()), r.get_rest_str());
+        return Result(sin(r.getCurrentValue()), r.getRestString());
     } else if (func == "cos") {
-        return Result(cos(r.get_curr_val()), r.get_rest_str());
+        return Result(cos(r.getCurrentValue()), r.getRestString());
     } else if (func == "tan") {
-        return Result(tan(r.get_curr_val()), r.get_rest_str());
+        return Result(tan(r.getCurrentValue()), r.getRestString());
     } else {
         std::cout << "Unknown function: " << func << std::endl;
-        return Result(0, r.get_rest_str());
+        return Result(0, r.getRestString());
     }
 }
