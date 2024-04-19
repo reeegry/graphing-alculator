@@ -51,8 +51,18 @@ void MainWindow::xAxisRangeChanged(const QCPRange &newRange, const QCPRange &old
     if (!count) {
         return;
     }
-    models[0]->funcParser->set_step(((newRange.upper - newRange.lower) / 10000));
     qDebug() << "Step: " << models[0]->funcParser->get_step() << '\n';
+
+    // if (models[0]->_points[0].size() > 0) {
+    //     double dist = std::abs(models[0]->_points[0][0] - models[0]->_points[0][models[0]->_points[0].size() - 1]); // if dist to small do nothing
+    //     if (newRange.lower > models[0]->_points[0][0] &&
+    //         newRange.upper < models[0]->_points[0][models[0]->_points[0].size() - 1]) {
+
+    //         return;
+    //     }
+    // }
+
+    models[0]->funcParser->set_step(((newRange.upper - newRange.lower) / 1000));
     models[0]->getPoints(models[0]->getOriginalFunction(), newRange.lower, newRange.upper); // points in models[0]->_points
     if (!ui->widget->graphCount()) {
         ui->widget->addGraph();
@@ -61,12 +71,5 @@ void MainWindow::xAxisRangeChanged(const QCPRange &newRange, const QCPRange &old
     qDebug() << "Size x: " << models[0]->_points[0].size() << '\n';
     qDebug() << "Size y: " << models[0]->_points[1].size() << '\n';
     ui->widget->graph(0)->setData(models[0]->_points[0], models[0]->_points[1]);
-
-
-    qDebug() << "Points: \n";
-    for (int i = 0; i < models[0]->_points[0].size(); ++i) {
-        qDebug() << models[0]->_points[0][i] << " " << models[0]->_points[1][i] << " ";
-    }
-    qDebug() << '\n';
 
 }
