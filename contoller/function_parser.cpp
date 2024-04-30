@@ -13,6 +13,7 @@ public:
 
     double getCurrentValue() const { return _current_val; }
     void setCurrentValue(double newValue) { _current_val = newValue; }
+    Result power_parse(std::string s);
 
     std::string getRestString() const { return _rest_str; }
     void setRestString(const std::string& newString) { _rest_str = newString; }
@@ -22,6 +23,68 @@ private:
     std::string _rest_str;
 };
 
+FunctionParser::Result FunctionParser::power_case(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString()[0] != '^') {
+            break;
+        }
+
+        std::string next = tmp_res.getRestString().substr(1);
+        // Skip spaces
+        while (next.length() > 0 && next[0] == ' ') {
+            next = next.substr(1);
+        }
+
+        Result right = bracket(next);
+
+        current_val = pow(current_val, right.getCurrentValue());
+
+        tmp_res = Result(current_val, right.getRestString());
+    }
+
+    return tmp_res;
+}
+
+FunctionParser::Result FunctionParser::root_parse(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, 5) != "sqrt(") {
+            break;
+        }
+
+        std::string next = tmp_res.getRestString().substr(5); // Skip "sqrt("
+        int closing_index = next.find(')');
+        if (closing_index == std::string::npos) {
+            // Handle error: missing closing parenthesis
+            break;
+        }
+
+        std::string inside_sqrt = next.substr(0, closing_index);
+        next = next.substr(closing_index + 1); // Move past the closing parenthesis
+
+        FunctionParser parser(inside_sqrt);
+        current_val = sqrt(parser.parse()); // Parse and calculate the square root of the expression inside
+
+        tmp_res = Result(current_val, next);
+    }
+
+    return tmp_res;
+}
 
 FunctionParser::FunctionParser(const std::string function_str) :
         _function_text(function_str),
@@ -69,9 +132,9 @@ FunctionParser::Result FunctionParser::func_var(std::string s) {
 }
 
 FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
-    Result tmp_res = bracket(s);
-
+    Result tmp_res = power_case(s); // First, parse power operations
     double current_val = tmp_res.getCurrentValue();
+
     while (true) {
         // Пропускаем пробелы
         while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
@@ -93,7 +156,7 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
             next = next.substr(1);
         }
 
-        Result right = bracket(next);
+        Result right = power_case(next); // Parse power operations for the right operand
 
         if (sign == '*') {
             current_val *= right.getCurrentValue();
@@ -105,7 +168,6 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
     }
 }
 
-
 FunctionParser::Result FunctionParser::bracket(std::string s)
 {
     // Пропускаем пробелы в начале строки
@@ -115,7 +177,7 @@ FunctionParser::Result FunctionParser::bracket(std::string s)
     if (first_chr == '(') {
         // Пропускаем пробелы перед открывающейся скобкой
         s.erase(0, 1);
-        Result r = additive_parse(s);
+        Result r = additive_parse(s); // Парсим аддитивные выражения внутри скобок
         if (r.getRestString().length() && r.getRestString()[0] == ')') {
             // Пропускаем пробелы перед закрывающейся скобкой
             r.setRestString(r.getRestString().substr(1));
@@ -125,12 +187,11 @@ FunctionParser::Result FunctionParser::bracket(std::string s)
         }
         return r;
     }
-    return func_var(s);
+    return func_var(s); // Парсим функции или переменные
 }
 
-
 FunctionParser::Result FunctionParser::additive_parse(std::string s) {
-    Result tmp_res = multiplicative_parse(s);
+    Result tmp_res = power_case(s); // Сначала парсим степени
     double current_val = tmp_res.getCurrentValue();
     std::string rest_str = tmp_res.getRestString();
 
@@ -145,7 +206,7 @@ FunctionParser::Result FunctionParser::additive_parse(std::string s) {
         char sign = rest_str[0];
         std::string next = rest_str.substr(1);
 
-        tmp_res = multiplicative_parse(next);
+        tmp_res = power_case(next); // Парсим степени для следующего операнда
 
         // Пропускаем пробелы перед следующим операндом
         tmp_res.setRestString(tmp_res.getRestString().substr(tmp_res.getRestString().find_first_not_of(' ')));
@@ -158,7 +219,6 @@ FunctionParser::Result FunctionParser::additive_parse(std::string s) {
     Result new_res = Result(current_val, rest_str);
     return new_res;
 }
-
 
 FunctionParser::Result FunctionParser::num(std::string s) {
     // Пропускаем пробелы в начале строки

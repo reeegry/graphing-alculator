@@ -22,9 +22,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contoller/funciton_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/contoller/funciton_parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contoller/function_parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/contoller/function_parser.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/funciton_parser.h.86B6C61408D22F2F.idx" beforeDir="false" afterPath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/funciton_parser.h.86B6C61408D22F2F.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/function_parser.cpp.60DFB7CB08EECBF0.idx" beforeDir="false" afterPath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/function_parser.cpp.60DFB7CB08EECBF0.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/qcustomplot.cpp.EFAE238178025C0A.idx" beforeDir="false" afterPath="$PROJECT_DIR$/view/build/Desktop_Qt_6_7_0_MinGW_64_bit-Debug/.qtc_clangd/.cache/clangd/index/qcustomplot.cpp.EFAE238178025C0A.idx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -101,7 +98,7 @@
       <workItem from="1713362250800" duration="2030000" />
       <workItem from="1714489204102" duration="19000" />
       <workItem from="1714489655867" duration="402000" />
-      <workItem from="1714490305775" duration="349000" />
+      <workItem from="1714490305775" duration="1638000" />
     </task>
     <servers />
   </component>

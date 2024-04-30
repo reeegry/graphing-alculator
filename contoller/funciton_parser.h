@@ -23,8 +23,10 @@ private:
     Result multiplicative_parse(std::string s);
     Result bracket(std::string s);
     Result additive_parse(std::string s);
+    Result power_case(std::string s);
     Result num(std::string s);
     Result calculate_val(std::string func, Result r);
+    Result root_parse(std::string s);
 
     double _step = 1;
 };
