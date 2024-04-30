@@ -23,6 +23,40 @@ private:
     std::string _rest_str;
 };
 
+FunctionParser::Result FunctionParser::parse_function_with_brackets(std::string s, const std::string& func_name, int func_name_length) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, func_name_length) != func_name + "(") {
+            break;
+        }
+
+        std::string next = tmp_res.getRestString().substr(func_name_length); // Skip func_name
+        int closing_index = next.find(')');
+        if (closing_index == std::string::npos) {
+            // Handle error: missing closing parenthesis
+            break;
+        }
+
+        std::string inside_func = next.substr(0, closing_index);
+        next = next.substr(closing_index + 1); // Move past the closing parenthesis
+
+        FunctionParser parser(inside_func);
+        // Depending on func_name, call corresponding function (e.g., log or ln)
+        current_val = (func_name == "log") ? log(parser.parse()) : log(parser.parse());
+
+        tmp_res = Result(current_val, next);
+    }
+
+    return tmp_res;
+}
+
 FunctionParser::Result FunctionParser::power_case(std::string s) {
     Result tmp_res = bracket(s);
     double current_val = tmp_res.getCurrentValue();
@@ -54,7 +88,7 @@ FunctionParser::Result FunctionParser::power_case(std::string s) {
 }
 
 FunctionParser::Result FunctionParser::root_parse(std::string s) {
-    Result tmp_res = bracket(s);
+    Result tmp_res = parse_function_with_brackets(s, "sqrt", 5);
     double current_val = tmp_res.getCurrentValue();
 
     while (true) {
@@ -87,7 +121,7 @@ FunctionParser::Result FunctionParser::root_parse(std::string s) {
 }
 
 FunctionParser::Result FunctionParser::log_parse(std::string s) {
-    Result tmp_res = bracket(s);
+    Result tmp_res = parse_function_with_brackets(s, "log", 4);
     double current_val = tmp_res.getCurrentValue();
 
     while (true) {
@@ -120,7 +154,7 @@ FunctionParser::Result FunctionParser::log_parse(std::string s) {
 }
 
 FunctionParser::Result FunctionParser::ln_parse(std::string s) {
-    Result tmp_res = bracket(s);
+    Result tmp_res = parse_function_with_brackets(s, "ln", 3);
     double current_val = tmp_res.getCurrentValue();
 
     while (true) {

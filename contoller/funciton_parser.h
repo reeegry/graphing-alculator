@@ -29,6 +29,7 @@ private:
     Result root_parse(std::string s);
     Result log_parse(std::string s);
     Result ln_parse(std::string s);
+    Result parse_function_with_brackets(std::string s, const std::string& func_name, int func_name_length);
 
     double _step = 1;
 };
