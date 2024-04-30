@@ -27,6 +27,8 @@ private:
     Result num(std::string s);
     Result calculate_val(std::string func, Result r);
     Result root_parse(std::string s);
+    Result log_parse(std::string s);
+    Result ln_parse(std::string s);
 
     double _step = 1;
 };

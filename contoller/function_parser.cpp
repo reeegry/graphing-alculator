@@ -86,6 +86,72 @@ FunctionParser::Result FunctionParser::root_parse(std::string s) {
     return tmp_res;
 }
 
+FunctionParser::Result FunctionParser::log_parse(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, 4) != "log(") {
+            break;
+        }
+
+        std::string next = tmp_res.getRestString().substr(4); // Skip "log("
+        int closing_index = next.find(')');
+        if (closing_index == std::string::npos) {
+            // Handle error: missing closing parenthesis
+            break;
+        }
+
+        std::string inside_log = next.substr(0, closing_index);
+        next = next.substr(closing_index + 1); // Move past the closing parenthesis
+
+        FunctionParser parser(inside_log);
+        current_val = log(parser.parse()); // Parse and calculate the logarithm of the expression inside
+
+        tmp_res = Result(current_val, next);
+    }
+
+    return tmp_res;
+}
+
+FunctionParser::Result FunctionParser::ln_parse(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, 3) != "ln(") {
+            break;
+        }
+
+        std::string next = tmp_res.getRestString().substr(3); // Skip "ln("
+        int closing_index = next.find(')');
+        if (closing_index == std::string::npos) {
+            // Handle error: missing closing parenthesis
+            break;
+        }
+
+        std::string inside_ln = next.substr(0, closing_index);
+        next = next.substr(closing_index + 1); // Move past the closing parenthesis
+
+        FunctionParser parser(inside_ln);
+        current_val = log(parser.parse()); // Parse and calculate the natural logarithm of the expression inside
+
+        tmp_res = Result(current_val, next);
+    }
+
+    return tmp_res;
+}
+
 FunctionParser::FunctionParser(const std::string function_str) :
         _function_text(function_str),
         _vars() {}
@@ -132,7 +198,7 @@ FunctionParser::Result FunctionParser::func_var(std::string s) {
 }
 
 FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
-    Result tmp_res = power_case(s); // First, parse power operations
+    Result tmp_res = power_case(s); // Сначала парсим степени
     double current_val = tmp_res.getCurrentValue();
 
     while (true) {
@@ -156,7 +222,8 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
             next = next.substr(1);
         }
 
-        Result right = power_case(next); // Parse power operations for the right operand
+        // Парсим степени для следующего операнда
+        Result right = power_case(next);
 
         if (sign == '*') {
             current_val *= right.getCurrentValue();
@@ -164,12 +231,12 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
             current_val /= right.getCurrentValue();
         }
 
+        // Создаем объект Result для нового значения и оставшейся строки
         tmp_res = Result(current_val, right.getRestString());
     }
 }
 
-FunctionParser::Result FunctionParser::bracket(std::string s)
-{
+FunctionParser::Result FunctionParser::bracket(std::string s) {
     // Пропускаем пробелы в начале строки
     s.erase(0, s.find_first_not_of(' '));
 
