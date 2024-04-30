@@ -17,6 +17,8 @@ public:
     std::string getRestString() const { return _rest_str; }
     void setRestString(const std::string& newString) { _rest_str = newString; }
 
+    Result power_parse(std::string s);
+
 private:
     double _current_val;
     std::string _rest_str;
@@ -196,6 +198,95 @@ FunctionParser::Result FunctionParser::num(std::string s) {
     return Result(dpart, rest_part);
 }
 
+FunctionParser::Result FunctionParser::power_parse(std::string s) {
+    Result tmp_res = bracket(s);
+
+    double current_val = tmp_res.getCurrentValue();
+    while (true) {
+        // Пропускаем пробелы
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length()) {
+            return tmp_res;
+        }
+
+        char sign = tmp_res.getRestString()[0];
+        if (sign != '^') {
+            return tmp_res;
+        }
+
+        std::string next = tmp_res.getRestString().substr(1);
+        // Пропускаем пробелы
+        while (next.length() > 0 && next[0] == ' ') {
+            next = next.substr(1);
+        }
+
+        Result right = bracket(next);
+
+        current_val = pow(current_val, right.getCurrentValue());
+
+        tmp_res = Result(current_val, right.getRestString());
+    }
+}
+
+FunctionParser::Result FunctionParser::power_parse(std::string s) {
+    Result tmp_res = bracket(s);
+
+    double current_val = tmp_res.getCurrentValue();
+    while (true) {
+        // Пропускаем пробелы
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        if (!tmp_res.getRestString().length()) {
+            return tmp_res;
+        }
+
+        char sign = tmp_res.getRestString()[0];
+        if (sign != '^') {
+            return tmp_res;
+        }
+
+        std::string next = tmp_res.getRestString().substr(1);
+        // Пропускаем пробелы
+        while (next.length() > 0 && next[0] == ' ') {
+            next = next.substr(1);
+        }
+
+        Result right = bracket(next);
+
+        current_val = pow(current_val, right.getCurrentValue());
+
+        tmp_res = Result(current_val, right.getRestString());
+    }
+}
+
+FunctionParser::Result FunctionParser::sqrt_parse(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    if (current_val < 0) {
+        std::cout << "Error: Square root of a negative number" << std::endl;
+        return tmp_res;
+    }
+
+    return Result(sqrt(current_val), tmp_res.getRestString());
+}
+
+FunctionParser::Result FunctionParser::log_parse(std::string s) {
+    Result tmp_res = bracket(s);
+    double current_val = tmp_res.getCurrentValue();
+
+    if (current_val <= 0) {
+        std::cout << "Error: Logarithm of a non-positive number" << std::endl;
+        return tmp_res;
+    }
+
+    return Result(log(current_val), tmp_res.getRestString());
+}
 
 FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r) {
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
