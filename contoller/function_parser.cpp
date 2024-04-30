@@ -73,6 +73,11 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
 
     double current_val = tmp_res.getCurrentValue();
     while (true) {
+        // Пропускаем пробелы
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
         if (!tmp_res.getRestString().length()) {
             return tmp_res;
         }
@@ -83,6 +88,11 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
         }
 
         std::string next = tmp_res.getRestString().substr(1);
+        // Пропускаем пробелы
+        while (next.length() > 0 && next[0] == ' ') {
+            next = next.substr(1);
+        }
+
         Result right = bracket(next);
 
         if (sign == '*') {
@@ -95,46 +105,65 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
     }
 }
 
+
 FunctionParser::Result FunctionParser::bracket(std::string s)
 {
+    // Пропускаем пробелы в начале строки
+    s.erase(0, s.find_first_not_of(' '));
+
     char first_chr = s[0];
     if (first_chr == '(') {
-        Result r = additive_parse(s.substr(1));
+        // Пропускаем пробелы перед открывающейся скобкой
+        s.erase(0, 1);
+        Result r = additive_parse(s);
         if (r.getRestString().length() && r.getRestString()[0] == ')') {
+            // Пропускаем пробелы перед закрывающейся скобкой
             r.setRestString(r.getRestString().substr(1));
-            // if (r.getRestString().length() > 0) {
-            //     return additive_parse(r.getRestString());
-            } else {
-                std::cout << "Error: No closing bracket" << std::endl;
-            }
+            r.setRestString(r.getRestString().substr(r.getRestString().find_first_not_of(' ')));
+        } else {
+            std::cout << "Error: No closing bracket" << std::endl;
+        }
         return r;
     }
     return func_var(s);
 }
+
 
 FunctionParser::Result FunctionParser::additive_parse(std::string s) {
     Result tmp_res = multiplicative_parse(s);
     double current_val = tmp_res.getCurrentValue();
     std::string rest_str = tmp_res.getRestString();
 
-    while (tmp_res.getRestString().length()) {
-        if (!(tmp_res.getRestString()[0] == '+' || tmp_res.getRestString()[0] == '-')) {
+    while (rest_str.length()) {
+        // Пропускаем пробелы перед операторами
+        rest_str.erase(0, rest_str.find_first_not_of(' '));
+
+        if (!(rest_str[0] == '+' || rest_str[0] == '-')) {
             break;
         }
 
-        char sign = tmp_res.getRestString()[0];
-        std::string next = tmp_res.getRestString().substr(1);
+        char sign = rest_str[0];
+        std::string next = rest_str.substr(1);
 
         tmp_res = multiplicative_parse(next);
 
+        // Пропускаем пробелы перед следующим операндом
+        tmp_res.setRestString(tmp_res.getRestString().substr(tmp_res.getRestString().find_first_not_of(' ')));
+
         current_val = (sign == '+') ? current_val + tmp_res.getCurrentValue() : current_val - tmp_res.getCurrentValue();
+
+        rest_str = tmp_res.getRestString();
     }
 
-    Result new_res = Result(current_val, tmp_res.getRestString());
+    Result new_res = Result(current_val, rest_str);
     return new_res;
 }
 
+
 FunctionParser::Result FunctionParser::num(std::string s) {
+    // Пропускаем пробелы в начале строки
+    s.erase(0, s.find_first_not_of(' '));
+
     int i = 0;
     int dot_cnt = 0;
     bool neg = false;
@@ -166,6 +195,7 @@ FunctionParser::Result FunctionParser::num(std::string s) {
 
     return Result(dpart, rest_part);
 }
+
 
 FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r) {
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
