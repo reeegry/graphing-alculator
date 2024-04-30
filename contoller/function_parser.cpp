@@ -53,12 +53,12 @@ double FunctionParser::get_var(std::string var_name) {
 FunctionParser::Result FunctionParser::func_var(std::string s) {
     std::string f = "";
     int i = 0;
-    while (i < s.length() && (isalpha(s[i]) || (isdigit(s[i]) && i > 0))) {
+    while (i < static_cast<int>(s.length()) && (isalpha(s[i]) || (isdigit(s[i]) && i > 0))) {
         f += s[i];
         i++;
     }
     if (f.length()) {
-        if (s.length() > i && s[i] == '(') {
+        if (static_cast<int>(s.length()) > i && s[i] == '(') {
             Result r = bracket(s.substr(f.length()));
             return calculate_val(f, r);
         } else {
@@ -144,7 +144,7 @@ FunctionParser::Result FunctionParser::num(std::string s) {
         s = s.substr(1);
     }
 
-    while (i < s.length() && (s[i] == ' ' || isdigit(s[i]) || s[i] == '.')) {
+    while (i < static_cast<int>(s.length()) && (s[i] == ' ' || isdigit(s[i]) || s[i] == '.')) {
         if (s[i] == '.' && ++dot_cnt > 1) {
             std::cout << "not valid num" << std::endl;
         }
@@ -178,7 +178,7 @@ FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r)
         return Result(tan(r.getCurrentValue() * M_PI / 180), r.getRestString());
     } else {
         std::cout << "Unknown function: " << func << std::endl;
-        //return Result(0, r.getRestString());
+        return Result(0, r.getRestString());
     }
 }
 

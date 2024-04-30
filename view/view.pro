@@ -17,7 +17,7 @@ SOURCES += \
 
 HEADERS += \
     ../Model/Model.h \
-    ../contoller/funciton_parser.h \
+    ../contoller/function_parser.h \
     mainwindow.h \
     qcustomplot.h
 

@@ -32109,9 +32109,9 @@ double QCPPolarAxisRadial::radiusToCoord(double radius) const
 */
 QCPPolarAxisRadial::SelectablePart QCPPolarAxisRadial::getPartAt(const QPointF &pos) const
 {
-  Q_UNUSED(pos) // TODO remove later
-  if (!mVisible)
-    return spNone;
+    Q_UNUSED(pos) // TODO remove later
+    if (!mVisible)
+      return spNone;
   
   /*
     TODO:
@@ -32930,20 +32930,21 @@ QCPPolarAxisAngular::SelectablePart QCPPolarAxisAngular::getPartAt(const QPointF
 {
   Q_UNUSED(pos) // TODO remove later
   
-  if (!mVisible)
-    return spNone;
-  
-  /*
-    TODO:
-  if (mAxisPainter->axisSelectionBox().contains(pos.toPoint()))
-    return spAxis;
-  else if (mAxisPainter->tickLabelsSelectionBox().contains(pos.toPoint()))
-    return spTickLabels;
-  else if (mAxisPainter->labelSelectionBox().contains(pos.toPoint()))
-    return spAxisLabel;
-  else */
-    return spNone;
-}
+    if (!mVisible)
+      return spNone;
+    else {
+      /*
+        TODO:
+      if (mAxisPainter->axisSelectionBox().contains(pos.toPoint()))
+        return spAxis;
+      else if (mAxisPainter->tickLabelsSelectionBox().contains(pos.toPoint()))
+        return spTickLabels;
+      else if (mAxisPainter->labelSelectionBox().contains(pos.toPoint()))
+        return spAxisLabel;
+      else */
+        return spNone;
+    }
+
 
 /* inherits documentation from base class */
 double QCPPolarAxisAngular::selectTest(const QPointF &pos, bool onlySelectable, QVariant *details) const
