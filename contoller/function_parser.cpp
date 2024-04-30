@@ -9,7 +9,7 @@
 class FunctionParser::Result {
 public:
     Result(double currentValue, const std::string& restString) :
-    _current_val(currentValue), _rest_str(restString) {}
+            _current_val(currentValue), _rest_str(restString) {}
 
     double getCurrentValue() const { return _current_val; }
     void setCurrentValue(double newValue) { _current_val = newValue; }
@@ -24,8 +24,8 @@ private:
 
 
 FunctionParser::FunctionParser(const std::string function_str) :
-    _function_text(function_str),
-    _vars() {}
+        _function_text(function_str),
+        _vars() {}
 
 void FunctionParser::set_var(std::string var_name, double val) {
     _vars[var_name] = val;
@@ -196,62 +196,6 @@ FunctionParser::Result FunctionParser::num(std::string s) {
     return Result(dpart, rest_part);
 }
 
-FunctionParser::Result FunctionParser::power_parse(std::string s) {
-    Result tmp_res = bracket(s);
-
-    double current_val = tmp_res.getCurrentValue();
-    while (true) {
-        // Пропускаем пробелы
-        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
-            tmp_res.setRestString(tmp_res.getRestString().substr(1));
-        }
-
-        if (!tmp_res.getRestString().length()) {
-            return tmp_res;
-        }
-
-        char sign = tmp_res.getRestString()[0];
-        if (sign != '^') {
-            return tmp_res;
-        }
-
-        std::string next = tmp_res.getRestString().substr(1);
-        // Пропускаем пробелы
-        while (next.length() > 0 && next[0] == ' ') {
-            next = next.substr(1);
-        }
-
-        Result right = bracket(next);
-
-        current_val = pow(current_val, right.getCurrentValue());
-
-        tmp_res = Result(current_val, right.getRestString());
-    }
-}
-
-FunctionParser::Result FunctionParser::sqrt_parse(std::string s) {
-    Result tmp_res = bracket(s);
-    double current_val = tmp_res.getCurrentValue();
-
-    if (current_val < 0) {
-        std::cout << "Error: Square root of a negative number" << std::endl;
-        return tmp_res;
-    }
-
-    return Result(sqrt(current_val), tmp_res.getRestString());
-}
-
-FunctionParser::Result FunctionParser::log_parse(std::string s) {
-    Result tmp_res = bracket(s);
-    double current_val = tmp_res.getCurrentValue();
-
-    if (current_val <= 0) {
-        std::cout << "Error: Logarithm of a non-positive number" << std::endl;
-        return tmp_res;
-    }
-
-    return Result(log(current_val), tmp_res.getRestString());
-}
 
 FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r) {
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
@@ -275,4 +219,3 @@ double FunctionParser::parse() {
     }
     return result.getCurrentValue();
 }
-
