@@ -19,6 +19,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="86a435cd-c0a2-47b0-bc39-ec4c6e5b925a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contoller/funciton_parser.h" beforeDir="false" afterPath="$PROJECT_DIR$/contoller/funciton_parser.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/contoller/function_parser.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/contoller/function_parser.cpp" afterDir="false" />
     </list>
@@ -97,7 +98,7 @@
       <workItem from="1713362250800" duration="2030000" />
       <workItem from="1714489204102" duration="19000" />
       <workItem from="1714489655867" duration="402000" />
-      <workItem from="1714490305775" duration="2641000" />
+      <workItem from="1714490305775" duration="3353000" />
     </task>
     <servers />
   </component>

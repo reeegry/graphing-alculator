@@ -30,6 +30,11 @@ private:
     Result log_parse(std::string s);
     Result ln_parse(std::string s);
     Result parse_function_with_brackets(std::string s, const std::string& func_name, int func_name_length);
+    Result arc_trig_parse(std::string s, const std::string& trig_name, int trig_name_length);
+    Result asin_parse(std::string s);
+    Result acos_parse(std::string s);
+    Result atan_parse(std::string s);
+    Result actan_parse(std::string s);
 
     double _step = 1;
 };

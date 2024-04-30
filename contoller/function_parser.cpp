@@ -186,6 +186,83 @@ FunctionParser::Result FunctionParser::ln_parse(std::string s) {
     return tmp_res;
 }
 
+FunctionParser::Result FunctionParser::arc_trig_parse(std::string s, const std::string& trig_name, int trig_name_length) {
+    Result tmp_res = parse_function_with_brackets(s, trig_name, trig_name_length);
+    double current_val = tmp_res.getCurrentValue();
+
+    while (true) {
+        // Skip spaces
+        while (tmp_res.getRestString().length() > 0 && tmp_res.getRestString()[0] == ' ') {
+            tmp_res.setRestString(tmp_res.getRestString().substr(1));
+        }
+
+        std::string trig_prefix = trig_name.substr(0, 3); // Extract the prefix, e.g., "arc" or "a"
+        if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, trig_name_length) != trig_name + "(") {
+            // Also check if the function starts with the trig_name with the prefix "arc" or "a"
+            if (!tmp_res.getRestString().length() || tmp_res.getRestString().substr(0, 3) != trig_prefix + "(") {
+                break;
+            }
+        }
+
+        std::string next = tmp_res.getRestString().substr(trig_name_length); // Skip trig_name
+        int closing_index = next.find(')');
+        if (closing_index == std::string::npos) {
+            // Handle error: missing closing parenthesis
+            break;
+        }
+
+        std::string inside_trig = next.substr(0, closing_index);
+        next = next.substr(closing_index + 1); // Move past the closing parenthesis
+
+        FunctionParser parser(inside_trig);
+        if (trig_prefix == "arc") {
+            // Use the corresponding inverse trigonometric function
+            if (trig_name == "asin") {
+                current_val = asin(parser.parse());
+            } else if (trig_name == "acos") {
+                current_val = acos(parser.parse());
+            } else if (trig_name == "atan") {
+                current_val = atan(parser.parse());
+            } else if (trig_name == "actan") { // Add support for arcctan
+                current_val = atan(1.0 / parser.parse());
+            } else if (trig_name == "atan") { // Add support for arctan
+                current_val = atan(parser.parse());
+            }
+        } else {
+            // If trig_prefix is "a", handle the functions without prefix
+            if (trig_name == "sin") {
+                current_val = asin(parser.parse());
+            } else if (trig_name == "cos") {
+                current_val = acos(parser.parse());
+            } else if (trig_name == "tan" || trig_name == "tg") { // Add support for tan and tg
+                current_val = tan(parser.parse());
+            } else if (trig_name == "ctan" || trig_name == "ctg") { // Add support for cotangent
+                current_val = 1.0 / tan(parser.parse());
+            }
+        }
+
+        tmp_res = Result(current_val, next);
+    }
+
+    return tmp_res;
+}
+
+FunctionParser::Result FunctionParser::asin_parse(std::string s) {
+    return arc_trig_parse(s, "asin", 4);
+}
+
+FunctionParser::Result FunctionParser::acos_parse(std::string s) {
+    return arc_trig_parse(s, "acos", 4);
+}
+
+FunctionParser::Result FunctionParser::atan_parse(std::string s) {
+    return arc_trig_parse(s, "atan", 4);
+}
+
+FunctionParser::Result FunctionParser::actan_parse(std::string s) {
+    return arc_trig_parse(s, "actan", 4);
+}
+
 FunctionParser::FunctionParser(const std::string function_str) :
         _function_text(function_str),
         _vars() {}
@@ -246,7 +323,7 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
         }
 
         char sign = tmp_res.getRestString()[0];
-        if ((sign != '*' && sign != '/')) {
+        if ((sign != '*' && sign != '/' && sign != '/' && sign != 'c')) {
             return tmp_res;
         }
 
@@ -261,8 +338,17 @@ FunctionParser::Result FunctionParser::multiplicative_parse(std::string s) {
 
         if (sign == '*') {
             current_val *= right.getCurrentValue();
-        } else {
+        } else if (sign == '/') {
             current_val /= right.getCurrentValue();
+        } else if (sign == 'c') {
+            if (right.getRestString().length() && (right.getRestString()[0] == 't' || right.getRestString()[0] == 'g')) {
+                // Если следующая функция - "tan" или "tg", то парсим котангенс
+                right = power_case(right.getRestString().substr(1)); // Пропускаем "t" или "g"
+                current_val *= 1.0 / tan(right.getCurrentValue());
+            } else {
+                // Иначе парсим косеканс
+                current_val *= 1.0 / right.getCurrentValue();
+            }
         }
 
         // Создаем объект Result для нового значения и оставшейся строки
