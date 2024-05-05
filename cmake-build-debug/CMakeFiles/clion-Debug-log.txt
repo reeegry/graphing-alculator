@@ -8,12 +8,6 @@ CMake Deprecation Warning:
   use the cmake-file-api(7) to view CMake-generated project build trees.
 
 
--- The CXX compiler identification is MSVC 19.37.32822.0
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.37.32822/bin/Hostx64/x64/cl.exe - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
 CMake Warning (dev) at CMakeLists.txt:14 (find_package):
   Policy CMP0084 is not set: The FindQt module does not exist for
   find_package().  Run "cmake --help-policy CMP0084" for policy details.  Use

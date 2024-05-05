@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
         view/mainwindow.h
         view/mainwindow.ui
         ${TS_FILES}
+        contoller/function_parser.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
