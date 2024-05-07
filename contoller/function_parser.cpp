@@ -39,7 +39,7 @@ FunctionParser::Result FunctionParser::parse_function_with_brackets(std::string 
 
         std::string next = tmp_res.getRestString().substr(func_name_length); // Skip func_name
         int closing_index = next.find(')');
-        if (closing_index == std::string::npos) {
+        if (static_cast<std::string::size_type>(closing_index) == std::string::npos) {
             // Handle error: missing closing parenthesis
             break;
         }
@@ -103,7 +103,7 @@ FunctionParser::Result FunctionParser::root_parse(std::string s) {
 
         std::string next = tmp_res.getRestString().substr(5); // Skip "sqrt("
         int closing_index = next.find(')');
-        if (closing_index == std::string::npos) {
+        if (static_cast<std::string::size_type>(closing_index) == std::string::npos) {
             // Handle error: missing closing parenthesis
             break;
         }
@@ -135,7 +135,7 @@ FunctionParser::Result FunctionParser::log_parse(std::string s) {
         }
 
         std::string next = tmp_res.getRestString().substr(4); // Skip "log("
-        int closing_index = next.find(')');
+        std::string::size_type closing_index = next.find(')');
         if (closing_index == std::string::npos) {
             // Handle error: missing closing parenthesis
             break;
@@ -168,7 +168,7 @@ FunctionParser::Result FunctionParser::ln_parse(std::string s) {
         }
 
         std::string next = tmp_res.getRestString().substr(3); // Skip "ln("
-        int closing_index = next.find(')');
+        std::string::size_type closing_index = next.find(')');
         if (closing_index == std::string::npos) {
             // Handle error: missing closing parenthesis
             break;
@@ -205,7 +205,7 @@ FunctionParser::Result FunctionParser::arc_trig_parse(std::string s, const std::
         }
 
         std::string next = tmp_res.getRestString().substr(trig_name_length); // Skip trig_name
-        int closing_index = next.find(')');
+        std::string::size_type closing_index = next.find(')');
         if (closing_index == std::string::npos) {
             // Handle error: missing closing parenthesis
             break;

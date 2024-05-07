@@ -18,12 +18,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="86a435cd-c0a2-47b0-bc39-ec4c6e5b925a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/contoller/FunctionParser_Interface.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-Debug-log.txt" afterDir="false" />
-    </list>
+    <list default="true" id="86a435cd-c0a2-47b0-bc39-ec4c6e5b925a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,7 +100,7 @@
       <workItem from="1714489204102" duration="19000" />
       <workItem from="1714489655867" duration="402000" />
       <workItem from="1714490305775" duration="3594000" />
-      <workItem from="1714931229414" duration="643000" />
+      <workItem from="1714931229414" duration="1236000" />
     </task>
     <servers />
   </component>

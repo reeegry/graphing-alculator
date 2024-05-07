@@ -3721,6 +3721,7 @@ QList<QCPLayoutElement*> QCPLayout::elements(bool recursive) const
   Not all layouts need simplification. For example, QCPLayoutInset doesn't use explicit
   simplification while QCPLayoutGrid does.
 */
+
 void QCPLayout::simplify()
 {
 }
@@ -3736,6 +3737,7 @@ void QCPLayout::simplify()
   
   \see remove, takeAt
 */
+
 bool QCPLayout::removeAt(int index)
 {
   if (QCPLayoutElement *el = takeAt(index))
@@ -32927,23 +32929,25 @@ QPointF QCPPolarAxisAngular::coordToPixel(double angleCoord, double radiusCoord)
   \see setSelectedParts, setSelectableParts, QCustomPlot::setInteractions
 */
 QCPPolarAxisAngular::SelectablePart QCPPolarAxisAngular::getPartAt(const QPointF &pos) const
+
 {
   Q_UNUSED(pos) // TODO remove later
-  
-    if (!mVisible)
+
+  if (!mVisible)
+    return spNone;
+  else {
+    /*
+      TODO:
+    if (mAxisPainter->axisSelectionBox().contains(pos.toPoint()))
+      return spAxis;
+    else if (mAxisPainter->tickLabelsSelectionBox().contains(pos.toPoint()))
+      return spTickLabels;
+    else if (mAxisPainter->labelSelectionBox().contains(pos.toPoint()))
+      return spAxisLabel;
+    else */
       return spNone;
-    else {
-      /*
-        TODO:
-      if (mAxisPainter->axisSelectionBox().contains(pos.toPoint()))
-        return spAxis;
-      else if (mAxisPainter->tickLabelsSelectionBox().contains(pos.toPoint()))
-        return spTickLabels;
-      else if (mAxisPainter->labelSelectionBox().contains(pos.toPoint()))
-        return spAxisLabel;
-      else */
-        return spNone;
-    }
+  }
+}
 
 
 /* inherits documentation from base class */
@@ -32988,8 +32992,8 @@ double QCPPolarAxisAngular::selectTest(const QPointF &pos, bool onlySelectable, 
   
   \seebaseclassmethod
 */
-void QCPPolarAxisAngular::update(UpdatePhase phase)
-{
+
+void QCPPolarAxisAngular::update(UpdatePhase phase) {
   QCPLayoutElement::update(phase);
   
   switch (phase)
@@ -33020,8 +33024,7 @@ void QCPPolarAxisAngular::update(UpdatePhase phase)
 }
 
 /* inherits documentation from base class */
-QList<QCPLayoutElement*> QCPPolarAxisAngular::elements(bool recursive) const
-{
+QList<QCPLayoutElement*> QCPPolarAxisAngular::elements(bool recursive) const    {
   QList<QCPLayoutElement*> result;
   if (mInsetLayout)
   {
