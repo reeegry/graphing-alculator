@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/build",
+  "command": "/usr/bin/g++   -g -std=gnu++17 -o CMakeFiles/main.dir/main.cpp.o -c /media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/main.cpp",
+  "file": "/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/main.cpp"
+},
+{
+  "directory": "/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/build",
+  "command": "/usr/bin/g++   -g -std=gnu++17 -o CMakeFiles/main.dir/view/mainwindow.cpp.o -c /media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/view/mainwindow.cpp",
+  "file": "/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/view/mainwindow.cpp"
+}
+]

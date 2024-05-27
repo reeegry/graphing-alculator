@@ -52,7 +52,7 @@ void Function::getPoints(const std::string &_originalFunction, int xl, int xr)
     _points[1] = QVector<double> ();
 
     //qDebug() << funcParser->parse();
-    qDebug() << xl << " " << xr << '\n';
+    //qDebug() << xl << " " << xr << '\n';
     double step = funcParser->get_step();
     for (double i = xl; i <= xr; i += step) {
         funcParser->set_var("x", i);

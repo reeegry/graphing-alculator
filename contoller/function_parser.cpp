@@ -171,11 +171,11 @@ FunctionParser::Result FunctionParser::calculate_val(std::string func, Result r)
     std::transform(func.begin(), func.end(), func.begin(), ::tolower);
 
     if (func == "sin") {
-        return Result(sin(r.getCurrentValue() * M_PI / 180), r.getRestString());
+        return Result(sin(r.getCurrentValue()), r.getRestString());
     } else if (func == "cos") {
-        return Result(cos(r.getCurrentValue() * M_PI / 180), r.getRestString());
+        return Result(cos(r.getCurrentValue()), r.getRestString());
     } else if (func == "tan") {
-        return Result(tan(r.getCurrentValue() * M_PI / 180), r.getRestString());
+        return Result(tan(r.getCurrentValue()), r.getRestString());
     } else {
         std::cout << "Unknown function: " << func << std::endl;
         //return Result(0, r.getRestString());

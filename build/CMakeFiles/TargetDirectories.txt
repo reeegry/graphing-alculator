@@ -1,0 +1,3 @@
+/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/build/CMakeFiles/main.dir
+/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/build/CMakeFiles/edit_cache.dir
+/media/nikita/663870ea-53ad-40eb-8e1e-21ae6b0cb652/cpp/graphic_calculator/graphing-alculator/build/CMakeFiles/rebuild_cache.dir
