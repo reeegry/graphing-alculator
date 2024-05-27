@@ -62,14 +62,19 @@ void MainWindow::xAxisRangeChanged(const QCPRange &newRange, const QCPRange &old
     //     }
     // }
 
-    models[0]->funcParser->set_step(((newRange.upper - newRange.lower) / 1000));
-    models[0]->getPoints(models[0]->getOriginalFunction(), newRange.lower, newRange.upper); // points in models[0]->_points
-    if (!ui->widget->graphCount()) {
-        ui->widget->addGraph();
-    }
+//    models[0]->funcParser->set_step(((newRange.upper - newRange.lower) / 1000));
+//    models[0]->getPoints(models[0]->getOriginalFunction(), newRange.lower, newRange.upper); // points in models[0]->_points
+//    if (!ui->widget->graphCount()) {
+//        ui->widget->addGraph();
+//    }
+    models[0]->setStep(((newRange.upper - newRange.lower) / 1000));
+    models[0]->getPoints(models[0]->getOriginalFunction(), newRange.lower, newRange.upper);
 
+    if (!ui->widget->graphCount()) {
+            ui->widget->addGraph();
+    }
 //    qDebug() << "Size x: " << models[0]->_points[0].size() << '\n';
 //    qDebug() << "Size y: " << models[0]->_points[1].size() << '\n';
-    ui->widget->graph(0)->setData(models[0]->_points[0], models[0]->_points[1]);
+    ui->widget->graph(0)->setData(*models[0]->getX(), *models[0]->getY());
 
 }
